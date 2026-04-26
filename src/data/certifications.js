@@ -1,0 +1,32 @@
+export const certificationsData = [
+  {
+    id: 1,
+    title: "Introduction to Back-End Development",
+    issuer: "Meta / Coursera",
+    date: "Apr 2026",
+    credentialId: "M0OEHXPLLIQW",
+    img: "/certificates/cert1.png",
+    verify: "https://coursera.org/verify/M0OEHXPLLIQW",
+    tags: ["Backend","APIs","Web Development"],
+  },
+  {
+    id: 2,
+    title: "Introduction to TensorFlow for AI, ML & Deep Learning",
+    issuer: "DeepLearning.AI / Coursera",
+    date: "Apr 2026",
+    credentialId: "CFHM5TP9RIAM",
+    img: "/certificates/cert2.png",
+    verify: "https://coursera.org/verify/CFHM5TP9RIAM",
+    tags: ["TensorFlow","AI","Machine Learning"],
+  },
+  {
+    id: 3,
+    title: "Build Your Own Responsive Website",
+    issuer: "CCBP 4.0 Academy",
+    date: "Jun 2025",
+    credentialId: "FHCDQHQLPK",
+    img: "/certificates/cert3.png",
+    verify: "https://certificates.ccbp.in/academy/build-your-own-responsive-website?id=FHCDQHQLPK",
+    tags: ["HTML","CSS","Bootstrap","Responsive Design"],
+  },
+];
