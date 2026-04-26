@@ -1,5 +1,5 @@
 // Projects.jsx
-import { CardBody, CardContainer, CardItem } from '../ui/3DCard'
+import { CardBody, CardContainer, CardItem } from '../ui/3DCard.jsx'
 import { projectsData } from '../../data/projects-data'
 
 const Projects = () => (
