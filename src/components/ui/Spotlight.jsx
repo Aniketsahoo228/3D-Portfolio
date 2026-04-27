@@ -1,6 +1,14 @@
 import React from "react";
-import { cn } from "@/lib/utils";
-import { Spotlight } from "../ui/spotlight";
+import { cn } from "../../lib/utils";
+
+export function Spotlight({ className, fill = "white" }) {
+  return (
+    <div
+      className={cn("pointer-events-none absolute h-80 w-80 rounded-full blur-3xl", className)}
+      style={{ background: fill, opacity: 0.22 }}
+    />
+  );
+}
 
 export function SpotlightPreview() {
   return (

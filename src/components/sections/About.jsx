@@ -1,5 +1,5 @@
-import { WavyBackground } from "../ui/WavyBackground";
-import { BentoGrid, BentoGridItem } from "../ui/BentoGrid";
+import { WavyBackground } from "../ui/wavy-background";
+import { BentoGrid, BentoGridItem } from "../ui/bento-grid";
 import { personalData } from "../../data/personal-data";
 import { educations } from "../../data/educations";
 
@@ -7,15 +7,16 @@ const About = () => {
   const latestEducation = educations[0];
 
   return (
-    <section id="about">
+    <section id="about" className="-mt-px">
       <WavyBackground className="max-w-full py-20 px-4">
         <div className="max-w-6xl mx-auto">
           {/* Heading */}
           <div className="text-center mb-12">
-            <p className="text-cyan-400 uppercase tracking-[0.3em] text-sm mb-2">
+            <p className="text-indigo-700 dark:text-cyan-300 uppercase tracking-[0.3em] text-sm mb-2">
               Get To Know Me
             </p>
-            <h2 className="text-4xl md:text-5xl font-bold text-white">
+
+            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white">
               About Me
             </h2>
           </div>

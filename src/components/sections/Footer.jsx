@@ -22,7 +22,7 @@ const Footer = () => {
   const currentYear = new Date().getFullYear();
  
   return (
-    <footer className="relative w-full overflow-hidden bg-[#030014]">
+    <footer className="relative w-full overflow-hidden bg-transparent">
  
       {/* ── Top gradient border ── */}
       <div className="h-px w-full bg-gradient-to-r from-transparent via-purple-500 to-transparent opacity-60" />
@@ -38,13 +38,13 @@ const Footer = () => {
           {/* Column 1 — Logo + tagline */}
           <div className="flex flex-col gap-3">
             <a href="#hero" className="text-2xl font-bold font-mono tracking-wider">
-              <span className="text-white">&lt;</span>
+              <span className="text-gray-900 dark:text-white">&lt;</span>
               <span className="bg-gradient-to-r from-purple-400 to-cyan-400 bg-clip-text text-transparent">
                 {personalData.name}
               </span>
-              <span className="text-white"> /&gt;</span>
+              <span className="text-gray-900 dark:text-white"> /&gt;</span>
             </a>
-            <p className="text-gray-500 text-sm leading-relaxed max-w-xs">
+            <p className="text-gray-700 dark:text-gray-400 text-sm leading-relaxed max-w-xs">
               Building beautiful, interactive web experiences with React, Three.js and modern animations.
             </p>
             {/* Social icons */}
@@ -56,7 +56,7 @@ const Footer = () => {
                   target={s.url.startsWith("mailto") ? "_self" : "_blank"}
                   rel="noopener noreferrer"
                   aria-label={s.name}
-                  className="text-gray-500 hover:text-purple-400 transition-colors duration-200"
+                  className="text-gray-500 hover:text-purple-700 transition-colors duration-200 dark:text-gray-400 dark:hover:text-purple-300"
                 >
                   {iconMap[s.icon]}
                 </a>
@@ -66,7 +66,7 @@ const Footer = () => {
  
           {/* Column 2 — Quick nav links */}
           <div className="flex flex-col gap-3">
-            <h4 className="text-white font-semibold text-sm tracking-widest uppercase mb-1">
+            <h4 className="text-gray-900 dark:text-white font-semibold text-sm tracking-widest uppercase mb-1">
               Quick Links
             </h4>
             <div className="grid grid-cols-2 gap-1">
@@ -74,7 +74,7 @@ const Footer = () => {
                 <a
                   key={item.name}
                   href={item.link}
-                  className="text-gray-500 hover:text-cyan-400 text-sm transition-colors duration-200 py-1"
+                  className="text-gray-600 hover:text-blue-700 text-sm transition-colors duration-200 py-1 dark:text-gray-400 dark:hover:text-cyan-300"
                 >
                   {item.name}
                 </a>
@@ -84,21 +84,21 @@ const Footer = () => {
  
           {/* Column 3 — Contact info */}
           <div className="flex flex-col gap-3">
-            <h4 className="text-white font-semibold text-sm tracking-widest uppercase mb-1">
+            <h4 className="text-gray-900 dark:text-white font-semibold text-sm tracking-widest uppercase mb-1">
               Get In Touch
             </h4>
             <a
               href={`mailto:${personalData.email}`}
-              className="text-gray-500 hover:text-cyan-400 text-sm transition-colors duration-200 break-all"
+              className="text-gray-600 hover:text-blue-700 text-sm transition-colors duration-200 break-all dark:text-gray-400 dark:hover:text-cyan-300"
             >
               {personalData.email}
             </a>
-            <p className="text-gray-500 text-sm">{personalData.address}</p>
+            <p className="text-gray-600 dark:text-gray-400 text-sm">{personalData.address}</p>
             <a
               href={personalData.resume}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 mt-2 text-sm text-purple-400 hover:text-purple-300 transition-colors duration-200 font-medium"
+              className="inline-flex items-center gap-2 mt-2 text-sm text-purple-700 hover:text-indigo-700 transition-colors duration-200 font-medium dark:text-purple-300 dark:hover:text-purple-200"
             >
               Download Resume ↗
             </a>
@@ -106,13 +106,13 @@ const Footer = () => {
         </div>
  
         {/* ── Bottom divider ── */}
-        <div className="h-px w-full bg-gray-800 mb-6" />
+        <div className="h-px w-full bg-black/10 dark:bg-white/10 mb-6" />
  
         {/* ── Copyright bar ── */}
-        <div className="flex flex-col md:flex-row items-center justify-between gap-3 text-xs text-gray-600 font-mono">
+        <div className="flex flex-col md:flex-row items-center justify-between gap-3 text-xs text-gray-500 dark:text-gray-400 font-mono">
           <p>
             © {currentYear}{" "}
-            <span className="text-gray-500">{personalData.name}</span>
+            <span className="text-gray-700 dark:text-gray-300">{personalData.name}</span>
             . All rights reserved.
           </p>
           <p className="flex items-center gap-1">
@@ -124,7 +124,7 @@ const Footer = () => {
           </p>
           <a
             href="#hero"
-            className="text-gray-600 hover:text-purple-400 transition-colors duration-200"
+            className="text-gray-500 hover:text-purple-700 transition-colors duration-200 dark:text-gray-400 dark:hover:text-purple-300"
           >
             Back to top ↑
           </a>

@@ -1,13 +1,12 @@
-"use client";
 /**
  * Note: Use position fixed according to your needs
  * Desktop navbar is better positioned at the bottom
  * Mobile navbar is better positioned at bottom right.
  **/
 
-import { cn } from "@/lib/utils";
+import { cn } from "../../lib/utils";
 import { IconLayoutNavbarCollapse } from "@tabler/icons-react";
-import { AnimatePresence, motion, useMotionValue, useSpring, useTransform } from "motion/react";
+import { AnimatePresence, motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 
 import { useRef, useState } from "react";
 
@@ -38,7 +37,7 @@ const FloatingDockMobile = ({
             className="absolute inset-x-0 bottom-full mb-2 flex flex-col gap-2">
             {items.map((item, idx) => (
               <motion.div
-                key={item.title}
+                key={item.name}
                 initial={{ opacity: 0, y: 10 }}
                 animate={{
                   opacity: 1,
@@ -53,10 +52,10 @@ const FloatingDockMobile = ({
                 }}
                 transition={{ delay: (items.length - 1 - idx) * 0.05 }}>
                 <a
-                  href={item.href}
-                  key={item.title}
+                  href={item.link}
+                  key={item.name}
                   className="flex h-10 w-10 items-center justify-center rounded-full bg-gray-50 dark:bg-neutral-900">
-                  <div className="h-4 w-4">{item.icon}</div>
+                  <div className="h-4 w-4">{item.icon ?? item.name.charAt(0)}</div>
                 </a>
               </motion.div>
             ))}
@@ -86,7 +85,7 @@ const FloatingDockDesktop = ({
         className
       )}>
       {items.map((item) => (
-        <IconContainer mouseX={mouseX} key={item.title} {...item} />
+        <IconContainer mouseX={mouseX} key={item.name} {...item} />
       ))}
     </motion.div>
   );
@@ -94,9 +93,9 @@ const FloatingDockDesktop = ({
 
 function IconContainer({
   mouseX,
-  title,
+  name,
   icon,
-  href
+  link
 }) {
   let ref = useRef(null);
 
@@ -137,7 +136,7 @@ function IconContainer({
   const [hovered, setHovered] = useState(false);
 
   return (
-    <a href={href}>
+    <a href={link}>
       <motion.div
         ref={ref}
         style={{ width, height }}
@@ -151,14 +150,14 @@ function IconContainer({
               animate={{ opacity: 1, y: 0, x: "-50%" }}
               exit={{ opacity: 0, y: 2, x: "-50%" }}
               className="absolute -top-8 left-1/2 w-fit rounded-md border border-gray-200 bg-gray-100 px-2 py-0.5 text-xs whitespace-pre text-neutral-700 dark:border-neutral-900 dark:bg-neutral-800 dark:text-white">
-              {title}
+              {name}
             </motion.div>
           )}
         </AnimatePresence>
         <motion.div
           style={{ width: widthIcon, height: heightIcon }}
           className="flex items-center justify-center">
-          {icon}
+          {icon ?? name.charAt(0)}
         </motion.div>
       </motion.div>
     </a>

@@ -1,6 +1,7 @@
 
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { personalData } from "../../data/personal-data";
 
 // ============================================================
 // LoadingScreen.jsx
@@ -82,7 +83,7 @@ const LoadingScreen = () => {
                     transition={{ delay: 0.25 }}
                     style={styles.nameText}
                   >
-                    YourName
+                    {personalData.name}
                   </motion.span>
                   <motion.span
                     initial={{ opacity: 0, x: 20 }}
@@ -104,8 +105,7 @@ const LoadingScreen = () => {
                 transition={{ duration: 0.5 }}
                 style={styles.orb}
               >
-                {/* Replace YN with your actual initials */}
-                <span style={styles.orbText}>YN</span>
+                <span style={styles.orbText}>AS</span>
                 {/* Spinning ring — uiverse.io glow spinner style */}
                 <span style={styles.ring} />
               </motion.div>
@@ -192,7 +192,7 @@ const styles = {
   overlay: {
     position: "fixed",
     inset: 0,
-    zIndex: 9999,
+    zIndex: 99999,
     backgroundColor: "#030014",
     display: "flex",
     alignItems: "center",
@@ -290,7 +290,6 @@ const styles = {
     fontFamily: "monospace",
     fontWeight: "700",
     letterSpacing: "3px",
-    // CHANGE "YourName" to your actual name in the JSX above
   },
 
   counterRow: {

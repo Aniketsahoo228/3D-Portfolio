@@ -1,6 +1,4 @@
-"use client";
-
-import { cn } from "@/lib/utils";
+import { cn } from "../../lib/utils";
 import React, { useEffect, useState } from "react";
 
 export const InfiniteMovingCards = ({
@@ -67,31 +65,18 @@ export const InfiniteMovingCards = ({
           start && "animate-scroll",
           pauseOnHover && "hover:[animation-play-state:paused]"
         )}>
-        {items.map((item, idx) => (
+        {items.map((item) => (
           <li
-            className="relative w-[350px] max-w-full shrink-0 rounded-2xl border border-b-0 border-zinc-200 bg-[linear-gradient(180deg,#fafafa,#f5f5f5)] px-8 py-6 md:w-[450px] dark:border-zinc-700 dark:bg-[linear-gradient(180deg,#27272a,#18181b)]"
+            className="relative flex w-[180px] max-w-full shrink-0 flex-col items-center justify-center gap-4 rounded-2xl border border-black/10 bg-[rgba(255,255,255,0.72)] px-8 py-6 backdrop-blur-md md:w-[220px] dark:border-white/10 dark:bg-[rgba(3,0,20,0.72)]"
             key={item.name}>
-            <blockquote>
-              <div
-                aria-hidden="true"
-                className="user-select-none pointer-events-none absolute -top-0.5 -left-0.5 -z-1 h-[calc(100%_+_4px)] w-[calc(100%_+_4px)]"></div>
-              <span
-                className="relative z-20 text-sm leading-[1.6] font-normal text-neutral-800 dark:text-gray-100">
-                {item.quote}
-              </span>
-              <div className="relative z-20 mt-6 flex flex-row items-center">
-                <span className="flex flex-col gap-1">
-                  <span
-                    className="text-sm leading-[1.6] font-normal text-neutral-500 dark:text-gray-400">
-                    {item.name}
-                  </span>
-                  <span
-                    className="text-sm leading-[1.6] font-normal text-neutral-500 dark:text-gray-400">
-                    {item.title}
-                  </span>
-                </span>
-              </div>
-            </blockquote>
+            <img
+              src={item.img}
+              alt={item.name}
+              className="relative z-20 h-16 w-16 object-contain"
+            />
+            <span className="relative z-20 text-center text-sm font-medium leading-[1.6] text-gray-900 dark:text-gray-100">
+              {item.name}
+            </span>
           </li>
         ))}
       </ul>

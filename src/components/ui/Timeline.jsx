@@ -1,81 +1,258 @@
-"use client";;
-import { useScroll, useTransform, motion } from "motion/react";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useLayoutEffect, useRef, useState } from "react";
+import { motion, useScroll, useSpring, useTransform } from "framer-motion";
 
-export const Timeline = ({
-  data
-}) => {
-  const ref = useRef(null);
-  const containerRef = useRef(null);
-  const [height, setHeight] = useState(0);
+export const Timeline = ({ data = [] }) => {
+  const wrapRef = useRef(null);
+  const pathRef = useRef(null);
 
-  useEffect(() => {
-    if (ref.current) {
-      const rect = ref.current.getBoundingClientRect();
-      setHeight(rect.height);
-    }
-  }, [ref]);
+  const [points, setPoints] = useState([]);
+  const [svgHeight, setSvgHeight] = useState(2600);
+  const [pathD, setPathD] = useState("");
 
   const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start 10%", "end 50%"],
+    target: wrapRef,
+    offset: ["start 55%", "end 75%"],
   });
 
-  const heightTransform = useTransform(scrollYProgress, [0, 1], [0, height]);
-  const opacityTransform = useTransform(scrollYProgress, [0, 0.1], [0, 1]);
+  const progress = useSpring(scrollYProgress, {
+  stiffness: 300,
+  damping: 40,
+});
+  const pathLength = useTransform(progress, [0, 1], [0.02, 1]);
+
+  useLayoutEffect(() => {
+    const gap = 300;
+const topPadding = 60;
+const totalHeight = topPadding + data.length * gap + 40;
+    setSvgHeight(totalHeight);
+
+    const r = 38;
+    const left = 60;
+    const right = 280;
+    const cx = 170;
+
+    let d = `M ${cx} ${topPadding}`;
+    let curX = cx;
+    let curY = topPadding;
+
+    const dotPositionsOnPath = [];
+
+    for (let i = 0; i < data.length; i++) {
+      const dotY = curY + gap / 2;
+      dotPositionsOnPath.push({ dotY });
+
+      if (i < data.length - 1) {
+        const segBottom = curY + gap;
+
+        if (i % 2 === 0) {
+          d += ` L ${curX} ${segBottom - r}`;
+          d += ` Q ${curX} ${segBottom}, ${curX + r} ${segBottom}`;
+          d += ` L ${right - r} ${segBottom}`;
+          d += ` Q ${right} ${segBottom}, ${right} ${segBottom + r}`;
+          curX = right;
+          curY = segBottom;
+        } else {
+          d += ` L ${curX} ${segBottom - r}`;
+          d += ` Q ${curX} ${segBottom}, ${curX - r} ${segBottom}`;
+          d += ` L ${left + r} ${segBottom}`;
+          d += ` Q ${left} ${segBottom}, ${left} ${segBottom + r}`;
+          curX = left;
+          curY = segBottom;
+        }
+      } else {
+         d += ` L ${curX} ${curY + gap * 0.55}`;
+      }
+    }
+
+    setPathD(d);
+
+    const timer = setTimeout(() => {
+      if (!pathRef.current) return;
+      const totalLen = pathRef.current.getTotalLength();
+
+      const pts = dotPositionsOnPath.map(({ dotY: targetY }) => {
+        let lo = 0,
+          hi = totalLen,
+          best = totalLen * 0.5,
+          bestDist = Infinity;
+
+        for (let iter = 0; iter < 60; iter++) {
+          const mid = (lo + hi) / 2;
+          const p = pathRef.current.getPointAtLength(mid);
+          const dist = Math.abs(p.y - targetY);
+          if (dist < bestDist) {
+            bestDist = dist;
+            best = mid;
+          }
+          if (p.y < targetY) lo = mid;
+          else hi = mid;
+        }
+        const pt = pathRef.current.getPointAtLength(best);
+        return { x: pt.x, y: pt.y };
+      });
+
+      setPoints(pts);
+    }, 80);
+
+    return () => clearTimeout(timer);
+  }, [data]);
 
   return (
-    <div
-      className="w-full bg-white dark:bg-neutral-950 font-sans md:px-10"
-      ref={containerRef}>
-      <div className="max-w-7xl mx-auto py-20 px-4 md:px-8 lg:px-10">
-        <h2 className="text-lg md:text-4xl mb-4 text-black dark:text-white max-w-4xl">
-          Changelog from my journey
-        </h2>
-        <p
-          className="text-neutral-700 dark:text-neutral-300 text-sm md:text-base max-w-sm">
-          I&apos;ve been working on Aceternity for the past 2 years. Here&apos;s
-          a timeline of my journey.
-        </p>
-      </div>
-      <div ref={ref} className="relative max-w-7xl mx-auto pb-20">
-        {data.map((item, index) => (
-          <div key={index} className="flex justify-start pt-10 md:pt-40 md:gap-10">
-            <div
-              className="sticky flex flex-col md:flex-row z-40 items-center top-40 self-start max-w-xs lg:max-w-sm md:w-full">
-              <div
-                className="h-10 absolute left-3 md:left-3 w-10 rounded-full bg-white dark:bg-black flex items-center justify-center">
-                <div
-                  className="h-4 w-4 rounded-full bg-neutral-200 dark:bg-neutral-800 border border-neutral-300 dark:border-neutral-700 p-2" />
-              </div>
-              <h3
-                className="hidden md:block text-xl md:pl-20 md:text-5xl font-bold text-neutral-500 dark:text-neutral-500 ">
-                {item.title}
-              </h3>
-            </div>
-
-            <div className="relative pl-20 pr-4 md:pl-4 w-full">
-              <h3
-                className="md:hidden block text-2xl mb-4 text-left font-bold text-neutral-500 dark:text-neutral-500">
-                {item.title}
-              </h3>
-              {item.content}{" "}
-            </div>
-          </div>
-        ))}
-        <div
+    <section
+      ref={wrapRef}
+      className="relative w-full overflow-hidden"
+      style={{ minHeight: svgHeight }}
+    >
+      <div className="relative mx-auto max-w-7xl" style={{ height: svgHeight }}>
+        {/* SVG — full width, not fixed 340px, no preserveAspectRatio squish */}
+        <svg
           style={{
-            height: height + "px",
+            position: "absolute",
+            left: "50%",
+            top: 0,
+            transform: "translateX(-50%)",
+            width: "340px",
+            height: `${svgHeight}px`,
+            overflow: "visible",
           }}
-          className="absolute md:left-8 left-8 top-0 overflow-hidden w-[2px] bg-[linear-gradient(to_bottom,var(--tw-gradient-stops))] from-transparent from-[0%] via-neutral-200 dark:via-neutral-700 to-transparent to-[99%]  [mask-image:linear-gradient(to_bottom,transparent_0%,black_10%,black_90%,transparent_100%)] ">
-          <motion.div
-            style={{
-              height: heightTransform,
-              opacity: opacityTransform,
-            }}
-            className="absolute inset-x-0 top-0  w-[2px] bg-gradient-to-t from-purple-500 via-blue-500 to-transparent from-[0%] via-[10%] rounded-full" />
-        </div>
+          viewBox={`0 0 340 ${svgHeight}`}
+        >
+          <defs>
+            <linearGradient id="grad" x1="0%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%" stopColor="#22d3ee" />
+              <stop offset="50%" stopColor="#3b82f6" />
+              <stop offset="100%" stopColor="#8b5cf6" />
+            </linearGradient>
+          </defs>
+
+          {/* Ghost track — always visible */}
+          <path
+            ref={pathRef}
+            d={pathD}
+            fill="none"
+            stroke="rgba(255,255,255,0.15)"
+            strokeWidth="4"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+
+          {/* Glowing scroll trace */}
+          {pathD && (
+            <motion.path
+              d={pathD}
+              fill="none"
+              stroke="url(#grad)"
+              strokeWidth="6"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              style={{
+                pathLength,
+                filter:
+                  "drop-shadow(0 0 6px #22d3ee) drop-shadow(0 0 14px #3b82f6)",
+              }}
+            />
+          )}
+        </svg>
+
+        {points.map((p, i) => {
+          const leftSide = i % 2 === 0;
+          const dotLeft = `calc(50% - 170px + ${p.x}px)`;
+
+          const cardLeft = leftSide
+            ? "calc(50% + 185px)"
+            : "calc(50% - 615px)";
+
+          const badgeLeft = leftSide
+            ? "calc(50% - 615px)"
+            : "calc(50% + 185px)";
+
+          const connectorLeft = leftSide
+            ? `calc(${dotLeft} + 12px)`
+            : `calc(${dotLeft} - 145px)`;
+
+          return (
+            <div key={i}>
+              {/* DOT */}
+              <div
+                style={{
+                  position: "absolute",
+                  left: dotLeft,
+                  top: p.y,
+                  transform: "translate(-50%, -50%)",
+                  zIndex: 20,
+                }}
+              >
+                <motion.div
+                  initial={{ scale: 0, opacity: 0 }}
+                  whileInView={{ scale: 1, opacity: 1 }}
+                  transition={{ delay: i * 0.08, type: "spring", stiffness: 220 }}
+                  viewport={{ once: true }}
+                  style={{
+                    width: 20,
+                    height: 20,
+                    borderRadius: "50%",
+                    background: "#22d3ee",
+                    border: "3px solid #020617",
+                    boxShadow: "0 0 14px 4px rgba(34,211,238,0.8)",
+                  }}
+                />
+              </div>
+
+              {/* CONNECTOR */}
+              <motion.div
+                style={{
+                  position: "absolute",
+                  top: p.y,
+                  left: connectorLeft,
+                  width: 130,
+                  height: 2,
+                  background:
+                    "linear-gradient(90deg, rgba(34,211,238,0.9), rgba(34,211,238,0.2))",
+                  transformOrigin: leftSide ? "left center" : "right center",
+                }}
+                initial={{ scaleX: 0, opacity: 0 }}
+                whileInView={{ scaleX: 1, opacity: 1 }}
+                transition={{ delay: i * 0.08 + 0.1, duration: 0.3 }}
+                viewport={{ once: true }}
+              />
+
+              {/* DATE BADGE */}
+              <motion.div
+                style={{
+                  position: "absolute",
+                  top: p.y - 16,
+                  left: badgeLeft,
+                  zIndex: 30,
+                }}
+                initial={{ opacity: 0, x: leftSide ? -16 : 16 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                transition={{ delay: i * 0.08 + 0.12 }}
+                viewport={{ once: true }}
+              >
+                <span className="rounded-full px-4 py-[7px] text-sm font-bold text-white whitespace-nowrap shadow-lg bg-gradient-to-r from-emerald-400 to-cyan-500">
+                  {data[i].title}
+                </span>
+              </motion.div>
+
+              {/* CARD */}
+              <motion.div
+                style={{
+                  position: "absolute",
+                  top: p.y - 80,
+                  left: cardLeft,
+                }}
+                className="w-[300px] md:w-[400px]"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ delay: i * 0.08 + 0.15, duration: 0.4 }}
+                viewport={{ once: true }}
+              >
+                {data[i].content}
+              </motion.div>
+            </div>
+          );
+        })}
       </div>
-    </div>
+    </section>
   );
 };

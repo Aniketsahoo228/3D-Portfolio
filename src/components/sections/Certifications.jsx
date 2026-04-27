@@ -28,7 +28,7 @@ const CertCard = ({ cert, index }) => (
       <div className="h-[2px] w-[2px] bg-[radial-gradient(#7C3AED_40%,transparent_60%)]" />
     </MovingBorder>
 
-    <div className="relative rounded-xl overflow-hidden border border-purple-500/20 bg-gray-900/80 backdrop-blur-sm hover:border-purple-500/50 transition-all duration-300 hover:-translate-y-1">
+    <div className="relative rounded-xl overflow-hidden border border-black/10 bg-[rgba(255,255,255,0.72)] backdrop-blur-md transition-all duration-300 hover:-translate-y-1 hover:scale-[1.02] hover:border-indigo-400 dark:border-white/10 dark:bg-[rgba(3,0,20,0.72)] dark:hover:border-purple-500/50">
       {cert.img && (
         <div className="relative h-44 overflow-hidden">
           <img
@@ -36,38 +36,38 @@ const CertCard = ({ cert, index }) => (
             alt={cert.title}
             className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-gray-900 via-gray-900/20 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-white/80 via-white/10 to-transparent dark:from-gray-900 dark:via-gray-900/20" />
         </div>
       )}
 
       <div className="p-5">
         <div className="flex items-center gap-2 mb-2">
-          <span className="text-xs font-mono font-semibold tracking-wider uppercase text-cyan-400">
+          <span className="text-xs font-mono font-semibold tracking-wider uppercase text-indigo-700 dark:text-cyan-300">
             {cert.issuer}
           </span>
           <VerifiedIcon />
         </div>
 
-        <h3 className="text-white font-bold text-base leading-snug mb-1">
+        <h3 className="text-gray-900 dark:text-white font-bold text-base leading-snug mb-1">
           {cert.title}
         </h3>
 
-        <p className="text-gray-500 text-xs mb-3">{cert.date}</p>
+        <p className="text-gray-500 dark:text-gray-400 text-xs mb-3">{cert.date}</p>
 
         <div className="flex flex-wrap gap-1 mb-4">
           {cert.tags.map((tag) => (
             <span
               key={tag}
-              className="text-xs px-2 py-0.5 rounded-full bg-purple-900/40 text-purple-300 border border-purple-800/40"
+              className="text-xs px-2 py-0.5 rounded-full bg-indigo-100 text-indigo-700 border border-indigo-200 dark:bg-purple-500/15 dark:text-purple-200 dark:border-purple-500/20"
             >
               {tag}
             </span>
           ))}
         </div>
 
-        <div className="flex items-center justify-between pt-3 border-t border-gray-800">
+        <div className="flex items-center justify-between pt-3 border-t border-black/10 dark:border-white/10">
           {cert.credentialId && (
-            <span className="text-gray-600 text-xs font-mono truncate max-w-[140px]">
+            <span className="text-gray-500 dark:text-gray-400 text-xs font-mono truncate max-w-[140px]">
               ID: {cert.credentialId}
             </span>
           )}
@@ -77,7 +77,7 @@ const CertCard = ({ cert, index }) => (
               href={cert.verify}
               target="_blank"
               rel="noopener noreferrer"
-              className="ml-auto flex items-center gap-1 text-xs font-medium text-cyan-400 hover:text-cyan-300 hover:underline"
+              className="ml-auto flex items-center gap-1 text-xs font-medium text-blue-700 hover:text-indigo-700 hover:underline dark:text-cyan-300 dark:hover:text-cyan-200"
             >
               Verify ↗
             </a>
@@ -101,11 +101,11 @@ const Certifications = () => {
           viewport={{ once: true }}
           className="text-center mb-14"
         >
-          <p className="mb-2 text-sm font-mono tracking-widest uppercase text-cyan-400">
+          <p className="mb-2 text-sm font-mono tracking-widest uppercase text-indigo-700 dark:text-cyan-300">
             What I Have Earned
           </p>
 
-          <h2 className="text-4xl md:text-5xl font-bold text-white">
+          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white">
             Certifications
           </h2>
 
@@ -122,7 +122,7 @@ const Certifications = () => {
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
-          className="mt-12 text-center text-sm font-mono text-gray-600"
+          className="mt-12 text-center text-sm font-mono text-gray-500 dark:text-gray-400"
         >
           {certificationsData.length} certifications earned and counting
         </motion.p>
