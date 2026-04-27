@@ -24,6 +24,7 @@ export const Timeline = ({ data = [] }) => {
     const gap = 300;
 const topPadding = 60;
 const totalHeight = topPadding + data.length * gap + 40;
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setSvgHeight(totalHeight);
 
     const r = 38;

@@ -96,6 +96,7 @@ export const WavyBackground = ({
   }, [isDark, blur, waveWidth, speed, waveOpacity, colors]);
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setIsSafari(
       typeof window !== "undefined" &&
         navigator.userAgent.includes("Safari") &&
