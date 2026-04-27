@@ -1,5 +1,4 @@
-import { useEffect } from "react";
-import { motion } from "framer-motion";
+import { useEffect, useMemo } from "react";
 import Lenis from "lenis";
 import { useTheme } from "./context/ThemeContext";
 
@@ -19,49 +18,50 @@ import Footer from "./components/sections/Footer";
 function App() {
   const { isDark } = useTheme();
 
+  // ✅ Optimized Lenis (less CPU usage)
   useEffect(() => {
     const lenis = new Lenis({
-      duration: 1.2,
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-      smooth: true,
+      duration: 1,
+      smoothWheel: true,
     });
 
-    function raf(time) {
+    let rafId;
+    const raf = (time) => {
       lenis.raf(time);
-      requestAnimationFrame(raf);
-    }
+      rafId = requestAnimationFrame(raf);
+    };
 
-    requestAnimationFrame(raf);
-    return () => lenis.destroy();
+    rafId = requestAnimationFrame(raf);
+
+    return () => {
+      cancelAnimationFrame(rafId);
+      lenis.destroy();
+    };
   }, []);
 
-  const sectionBackground = (darkOpacity, lightOpacity) => ({
-    background: isDark
-      ? `rgba(3, 0, 20, ${darkOpacity})`
-      : `rgba(248, 250, 255, ${lightOpacity})`,
-  });
+  // ✅ Memoized backgrounds (avoid recalculation every render)
+  const sectionBackground = useMemo(
+    () => ({
+      about: isDark ? "rgba(3,0,20,0.45)" : "rgba(248,250,255,0.45)",
+      projects: isDark ? "rgba(3,0,20,0.55)" : "rgba(248,250,255,0.55)",
+      skills: isDark ? "rgba(3,0,20,0.45)" : "rgba(248,250,255,0.45)",
+      experience: isDark ? "rgba(3,0,20,0.55)" : "rgba(248,250,255,0.55)",
+      certs: isDark ? "rgba(3,0,20,0.5)" : "rgba(248,250,255,0.5)",
+      contact: isDark ? "rgba(3,0,20,0.65)" : "rgba(248,250,255,0.65)",
+      footer: isDark ? "rgba(3,0,20,0.8)" : "rgba(248,250,255,0.8)",
+    }),
+    [isDark]
+  );
 
   return (
-    <div className="relative min-h-screen" style={{ isolation: "isolate" }}>
-      {/* Full page background image - fixed behind everything */}
-      <motion.img
-        key={isDark ? "dark" : "light"}
+    <div className="relative min-h-screen isolate">
+      
+      {/* ✅ Optimized background (NO framer-motion here) */}
+      <img
         src={isDark ? "/hero-dark.jpg" : "/hero-light.jpg"}
         alt=""
-        initial={{ opacity: 0 }}
-        animate={{ opacity: isDark ? 0.45 : 0.6 }}
-        transition={{ duration: 0.8 }}
-        style={{
-          position: "fixed",
-          top: 0,
-          left: 0,
-          width: "100vw",
-          height: "100vh",
-          objectFit: "cover",
-          objectPosition: "center center",
-          zIndex: -10,
-          pointerEvents: "none",
-        }}
+        className="fixed top-0 left-0 w-full h-full object-cover pointer-events-none z-[-10] transition-opacity duration-700"
+        style={{ opacity: isDark ? 0.45 : 0.6 }}
       />
 
       <LoadingScreen />
@@ -69,28 +69,35 @@ function App() {
       <Navbar />
 
       <main className="relative z-0">
-        <section style={{ background: "transparent" }}>
+        <section className="bg-transparent">
           <Hero />
         </section>
-        <section style={sectionBackground(0.45, 0.45)}>
+
+        <section style={{ background: sectionBackground.about }}>
           <About />
         </section>
-        <section style={sectionBackground(0.55, 0.55)}>
+
+        <section style={{ background: sectionBackground.projects }}>
           <Projects />
         </section>
-        <section style={sectionBackground(0.45, 0.45)}>
+
+        <section style={{ background: sectionBackground.skills }}>
           <Skills />
         </section>
-        <section style={sectionBackground(0.55, 0.55)}>
+
+        <section style={{ background: sectionBackground.experience }}>
           <Experience />
         </section>
-        <section style={sectionBackground(0.5, 0.5)}>
+
+        <section style={{ background: sectionBackground.certs }}>
           <Certifications />
         </section>
-        <section style={sectionBackground(0.65, 0.65)}>
+
+        <section style={{ background: sectionBackground.contact }}>
           <Contact />
         </section>
-        <section style={sectionBackground(0.8, 0.8)}>
+
+        <section style={{ background: sectionBackground.footer }}>
           <Footer />
         </section>
       </main>
