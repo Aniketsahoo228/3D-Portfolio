@@ -36,17 +36,17 @@ const Projects = () => (
         >
           <CardContainer containerClassName="py-0 w-full" className="w-full">
             <CardBody
-              className="
-                w-full h-auto
-                rounded-2xl
-                border border-white/10
-                bg-black/60 dark:bg-[#0b0f1a]
-                p-6
-                shadow-lg
-                relative
-                group
-              "
-            >
+  className="
+    w-full h-auto
+    rounded-2xl
+    border border-white/10
+    bg-white/60 dark:bg-white/10
+    p-6
+    shadow-lg
+    relative
+    group
+  "
+>
               {/* Title — floats highest */}
               <CardItem
                 translateZ={100}
