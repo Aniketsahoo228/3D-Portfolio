@@ -1,7 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import { Spotlight } from "../ui/Spotlight";
-import { Cover } from "../ui/cover";
+import { Cover } from "../ui/Cover";
 import { TypewriterEffect } from "../ui/typewriter-effect";
 import { FloatingDock } from "../ui/floating-dock";
 import { personalData } from "../../data/personal-data";

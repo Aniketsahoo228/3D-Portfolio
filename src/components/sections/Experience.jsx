@@ -1,4 +1,4 @@
-import { Timeline } from "../ui/timeline";
+import { Timeline } from "../ui/Timeline";
 import { experiences } from "../../data/experience";
 
 const Experience = () => {
