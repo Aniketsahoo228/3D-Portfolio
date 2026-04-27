@@ -1,66 +1,66 @@
 export const experiences = [
   {
     id: 1,
-    title: "Full Stack Developer",
-    company: "YugaYatri",
-    duration: "(Aug 2024 - Present)",
+    title: "Open Source Learner",
+    company: "GitHub",
+    duration: "(Jan 2022 - Present)",
     description:
-      "Building scalable full-stack web applications, developing responsive user interfaces, optimizing APIs, and contributing to modern product development using Next.js, Tailwind CSS, Python, and cloud-based workflows.",
+      "Started my dev journey by experimenting with code daily, maintaining consistent GitHub commits, and building a strong foundation in modern web technologies through hands-on projects.",
   },
   {
     id: 2,
-    title: "Frontend Developer",
-    company: "YugaYatri",
-    duration: "(2024 - Present)",
+    title: "UI/UX Developer",
+    company: "Independent Projects",
+    duration: "(Jun 2023 - Present)",
     description:
-      "Designing premium user interfaces, responsive landing pages, dashboards, and interactive product experiences with React, Tailwind CSS, Framer Motion, and modern UI systems.",
+      "Translating ideas and Figma designs into pixel-perfect interfaces with strong visual hierarchy, smooth micro-interactions, and a sharp eye for spacing, typography, and accessibility.",
   },
   {
     id: 3,
-    title: "SaaS Product Builder",
-    company: "YugaYatri",
-    duration: "(2024 - Present)",
+    title: "Freelance Web Developer",
+    company: "Self Employed",
+    duration: "(Jan 2024 - Present)",
     description:
-      "Co-building SaaS products with my friend, planning features, shipping MVPs, improving user flows, and creating revenue-driven digital products for real-world users.",
+      "Delivering high-quality business websites, portfolio platforms, and custom digital solutions for clients — with a focus on performance, branding, conversions, and mobile-first design.",
   },
   {
     id: 4,
-    title: "Freelance Web Developer",
-    company: "Self Employed",
-    duration: "(2024 - Present)",
+    title: "Frontend Developer",
+    company: "Independent Projects",
+    duration: "(Jun 2024 - Present)",
     description:
-      "Creating business websites, portfolio platforms, and custom web solutions for clients with focus on branding, conversions, speed, and responsive design.",
+      "Engineering premium, responsive UIs and interactive product experiences using React, Next.js, Tailwind CSS, and Framer Motion — from landing pages to full product dashboards.",
   },
   {
     id: 5,
-    title: "UI/UX Developer",
-    company: "Independent Projects",
-    duration: "(2024 - Present)",
-    description:
-      "Transforming ideas and Figma designs into polished user interfaces with strong visual hierarchy, accessibility, and smooth interactions.",
-  },
-  {
-    id: 6,
     title: "API Integration Developer",
-    company: "YugaYatri",
-    duration: "(2024 - Present)",
+    company: "Independent Projects",
+    duration: "(Jan 2025 - Present)",
     description:
-      "Integrating third-party services, authentication systems, databases, payments, and automation tools into production-ready applications.",
+      "Integrating third-party services including authentication systems, payment gateways, databases, and automation pipelines into robust, production-ready applications.",
   },
   {
-    id: 7,
-    title: "Open Source Learner",
-    company: "GitHub",
-    duration: "(2024 - Present)",
-    description:
-      "Maintaining coding consistency through continuous GitHub commits, experimenting with new technologies, and improving development workflows daily.",
-  },
+  id: 6,
+  title: "AI Workflow Builder",
+  company: "Independent Projects",
+  duration: "(Jun 2025 - Present)",
+  description:
+    "Building AI-powered tools, intelligent automation systems, and workflow-driven web solutions using modern frameworks, API integrations, and scalable architectures. Focused on productivity, automation, and real-world business use cases.",
+},
+{
+  id: 7,
+  title: "SaaS Product Builder",
+  company: "Independent Projects",
+  duration: "(Aug 2025 - Present)",
+  description:
+    "Ideating, designing, and launching SaaS MVPs from scratch — managing product strategy, feature planning, UI development, backend systems, and iterative improvements based on user feedback.",
+},
   {
-    id: 8,
-    title: "AI Workflow Builder",
-    company: "Personal Projects",
-    duration: "(2025 - Present)",
-    description:
-      "Exploring AI-powered tools, automation systems, and productivity workflows to build smarter products and next-generation web experiences.",
-  },
+  id: 8,
+  title: "Software Engineer Intern",
+  company: "YugaYatra Retail (OPC) Private Ltd",
+  duration: "(Apr 2026 - Present)",
+  description:
+  "Contributing to real-world web projects by building modern applications, creating responsive user interfaces, optimizing performance, and collaborating on production workflows .",
+},
 ];

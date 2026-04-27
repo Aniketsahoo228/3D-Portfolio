@@ -1,0 +1,37 @@
+<svg width="32" height="32" viewBox="0 0 680 680" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="coreGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#7dd3fc" stop-opacity="0.9"/>
+      <stop offset="40%" stop-color="#818cf8" stop-opacity="0.6"/>
+      <stop offset="100%" stop-color="#0f172a" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="ringGrad1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#6366f1"/>
+      <stop offset="50%" stop-color="#22d3ee"/>
+      <stop offset="100%" stop-color="#8b5cf6"/>
+    </linearGradient>
+    <linearGradient id="strokeA" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#7dd3fc"/>
+      <stop offset="100%" stop-color="#8b5cf6"/>
+    </linearGradient>
+    <linearGradient id="strokeS" x1="100%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#22d3ee"/>
+      <stop offset="100%" stop-color="#6366f1"/>
+    </linearGradient>
+  </defs>
+
+  <circle cx="340" cy="340" r="300" fill="#080b18"/>
+  <circle cx="340" cy="340" r="240" fill="none" stroke="url(#ringGrad1)" stroke-width="8" stroke-dasharray="18 10" stroke-opacity="0.7"/>
+  <circle cx="340" cy="340" r="118" fill="none" stroke="url(#ringGrad1)" stroke-width="10" stroke-opacity="0.9"/>
+  <circle cx="340" cy="340" r="80" fill="#0d1533"/>
+  <circle cx="340" cy="340" r="78" fill="none" stroke="#22d3ee" stroke-width="4" stroke-opacity="0.5"/>
+
+  <line x1="300" y1="375" x2="330" y2="305" stroke="url(#strokeA)" stroke-width="18" stroke-linecap="round"/>
+  <line x1="330" y1="305" x2="360" y2="375" stroke="url(#strokeA)" stroke-width="18" stroke-linecap="round"/>
+  <line x1="311" y1="348" x2="349" y2="348" stroke="url(#strokeA)" stroke-width="14" stroke-linecap="round"/>
+
+  <path d="M 358 318 C 380 308, 388 322, 370 338 C 352 354, 360 368, 382 358"
+    fill="none" stroke="url(#strokeS)" stroke-width="18" stroke-linecap="round"/>
+
+  <circle cx="340" cy="340" r="12" fill="#e0f2fe" fill-opacity="0.8"/>
+</svg>
