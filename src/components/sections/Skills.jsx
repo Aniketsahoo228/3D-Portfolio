@@ -1,5 +1,5 @@
 import { InfiniteMovingCards } from "../ui/infinite-moving-cards";
-import { SparklesCore } from "../ui/Sparkles";
+import { SparklesCore } from "../ui/sparkles";
 import { skillsData } from "../../data/skills";
 
 const Skills = () => {

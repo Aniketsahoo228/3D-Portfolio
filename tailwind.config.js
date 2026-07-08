@@ -1,55 +1,80 @@
 /** @type {import('tailwindcss').Config} */
 export default {
-  darkMode: 'class',
-  content: ['./index.html', './src/**/*.{js,jsx,ts,tsx}'],
+  darkMode: "class",
+  content: ["./index.html", "./src/**/*.{js,jsx,ts,tsx}"],
+
   theme: {
     extend: {
       colors: {
-        primary: '#7C3AED',
-        secondary: '#06B6D4',
-        dark: '#030014',
-        border: 'var(--border)',
-        input: 'var(--input)',
-        ring: 'var(--ring)',
-        background: 'var(--background)',
-        foreground: 'var(--foreground)',
+        primary: "#7C3AED",
+        secondary: "#06B6D4",
+        dark: "#030014",
+
+        border: "var(--border)",
+        input: "var(--input)",
+        ring: "var(--ring)",
+        background: "var(--background)",
+        foreground: "var(--foreground)",
+
         card: {
-          DEFAULT: 'var(--card)',
-          foreground: 'var(--card-foreground)',
+          DEFAULT: "var(--card)",
+          foreground: "var(--card-foreground)",
         },
+
         popover: {
-          DEFAULT: 'var(--popover)',
-          foreground: 'var(--popover-foreground)',
+          DEFAULT: "var(--popover)",
+          foreground: "var(--popover-foreground)",
         },
+
         muted: {
-          DEFAULT: 'var(--muted)',
-          foreground: 'var(--muted-foreground)',
+          DEFAULT: "var(--muted)",
+          foreground: "var(--muted-foreground)",
         },
+
         accent: {
-          DEFAULT: 'var(--accent)',
-          foreground: 'var(--accent-foreground)',
+          DEFAULT: "var(--accent)",
+          foreground: "var(--accent-foreground)",
         },
-        destructive: 'var(--destructive)',
+
+        destructive: "var(--destructive)",
       },
+
       animation: {
-        spotlight: 'spotlight 2s ease .75s 1 forwards',
-        shimmer: 'shimmer 2s linear infinite',
-        scroll: 'scroll var(--animation-duration, 40s) var(--animation-direction, forwards) linear infinite',
+        scroll:
+          "scroll var(--animation-duration, 40s) var(--animation-direction, forwards) linear infinite",
+        spotlight: "spotlight 2s ease .75s 1 forwards",
+        shimmer: "shimmer 2s linear infinite",
       },
+
       keyframes: {
-        spotlight: {
-          '0%': { opacity: 0, transform: 'translate(-72%, -62%) scale(0.5)' },
-          '100%': { opacity: 1, transform: 'translate(-50%, -40%) scale(1)' },
-        },
-        shimmer: {
-          from: { backgroundPosition: '0 0' },
-          to: { backgroundPosition: '-200% 0' },
-        },
         scroll: {
-          to: { transform: 'translate(calc(-50% - 0.5rem))' },
+          to: {
+            transform: "translate(calc(-50% - 0.5rem))",
+          },
+        },
+
+        spotlight: {
+          "0%": {
+            opacity: 0,
+            transform: "translate(-72%, -62%) scale(0.5)",
+          },
+          "100%": {
+            opacity: 1,
+            transform: "translate(-50%, -40%) scale(1)",
+          },
+        },
+
+        shimmer: {
+          from: {
+            backgroundPosition: "0 0",
+          },
+          to: {
+            backgroundPosition: "-200% 0",
+          },
         },
       },
     },
   },
+
   plugins: [],
-}
+};

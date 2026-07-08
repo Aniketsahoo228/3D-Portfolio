@@ -37,6 +37,10 @@ const CertCard = ({ cert, index }) => (
             <img
               src={cert.img}
               alt={cert.title}
+              loading="lazy"
+              decoding="async"
+              width={600}
+              height={300}
               className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-white/80 via-white/10 to-transparent dark:from-gray-900 dark:via-gray-900/20" />

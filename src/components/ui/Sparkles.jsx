@@ -1,4 +1,4 @@
-import React, { useId } from "react";
+import React, { useId, useRef } from "react";
 import { useEffect, useState } from "react";
 import Particles, { initParticlesEngine } from "@tsparticles/react";
 import { loadSlim } from "@tsparticles/slim";
@@ -17,6 +17,9 @@ export const SparklesCore = (props) => {
     particleDensity,
   } = props;
   const [init, setInit] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
+  const containerRef = useRef(null);
+
   useEffect(() => {
     initParticlesEngine(async (engine) => {
       await loadSlim(engine);
@@ -24,6 +27,21 @@ export const SparklesCore = (props) => {
       setInit(true);
     });
   }, []);
+
+  // Only run the particle simulation while the section is actually on
+  // screen — this is a full canvas animation loop, no reason to burn
+  // CPU/GPU on it while the user is nowhere near it.
+  useEffect(() => {
+    const node = containerRef.current;
+    if (!node) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => setIsVisible(entry.isIntersecting),
+      { rootMargin: "200px" }
+    );
+    observer.observe(node);
+    return () => observer.disconnect();
+  }, []);
+
   const controls = useAnimation();
 
   const particlesLoaded = async (container) => {
@@ -39,8 +57,8 @@ export const SparklesCore = (props) => {
 
   const generatedId = useId();
   return (
-    <motion.div animate={controls} className={cn("opacity-0", className)}>
-      {init && (
+    <motion.div ref={containerRef} animate={controls} className={cn("opacity-0", className)}>
+      {init && isVisible && (
         <Particles
           id={id || generatedId}
           className={cn("h-full w-full")}
@@ -56,7 +74,7 @@ export const SparklesCore = (props) => {
               zIndex: 1,
             },
 
-            fpsLimit: 120,
+            fpsLimit: 60,
             interactivity: {
               events: {
                 onClick: {
@@ -217,7 +235,7 @@ export const SparklesCore = (props) => {
                   mode: "delete",
                   value: 0,
                 },
-                value: particleDensity || 120,
+                value: particleDensity || 60,
               },
               opacity: {
                 value: {

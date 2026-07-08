@@ -1,5 +1,5 @@
 import { cn } from "../../lib/utils";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef } from "react";
 import { createNoise3D } from "simplex-noise";
 import { useTheme } from "../../context/ThemeContext";
 
@@ -16,9 +16,10 @@ export const WavyBackground = ({
 }) => {
   const { isDark } = useTheme();
   const canvasRef = useRef(null);
+  const containerRef = useRef(null);
   const animationRef = useRef(null);
   const noise = useRef(createNoise3D()).current;
-  const [isSafari, setIsSafari] = useState(false);
+  const isVisibleRef = useRef(true);
 
   const getSpeed = () => {
     if (speed === "slow") return 0.0008;
@@ -49,13 +50,21 @@ export const WavyBackground = ({
 
       canvas.width = w;
       canvas.height = h;
-
-      ctx.filter = `blur(${blur}px)`;
+      // Blur is applied via CSS on the canvas element (GPU-composited,
+      // computed once per paint) instead of ctx.filter (which forces the
+      // browser to re-rasterize the blur on every single stroke/frame).
     };
 
     const linesY = [0.2, 0.45, 0.7];
 
     const draw = () => {
+      // Skip all work while the section is off-screen instead of burning
+      // CPU on a canvas nobody can see.
+      if (!isVisibleRef.current) {
+        animationRef.current = requestAnimationFrame(draw);
+        return;
+      }
+
       time += getSpeed();
 
       ctx.clearRect(0, 0, w, h);
@@ -96,16 +105,21 @@ export const WavyBackground = ({
   }, [isDark, blur, waveWidth, speed, waveOpacity, colors]);
 
   useEffect(() => {
-    // eslint-disable-next-line react-hooks/set-state-in-effect
-    setIsSafari(
-      typeof window !== "undefined" &&
-        navigator.userAgent.includes("Safari") &&
-        !navigator.userAgent.includes("Chrome")
+    const node = containerRef.current;
+    if (!node) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        isVisibleRef.current = entry.isIntersecting;
+      },
+      { rootMargin: "200px" }
     );
+    observer.observe(node);
+    return () => observer.disconnect();
   }, []);
 
   return (
     <div
+      ref={containerRef}
       className={cn(
         "relative w-full h-full overflow-hidden bg-transparent",
         containerClassName
@@ -116,7 +130,7 @@ export const WavyBackground = ({
         className="absolute inset-0 w-full h-full -z-10"
         style={{
           background: "transparent",
-          ...(isSafari ? { filter: `blur(${blur}px)` } : {}),
+          filter: `blur(${blur}px)`,
         }}
       />
 

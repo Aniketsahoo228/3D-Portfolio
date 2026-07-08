@@ -1,24 +1,32 @@
+// ============================================================
+// src/components/ui/InfiniteCards.jsx
+// Fixed for Vite React (removed "use client")
+// Fixed for SKILLS display (icon + name) not testimonials
+// ============================================================
+
 import { cn } from "../../lib/utils";
 import React, { useEffect, useState } from "react";
 
 export const InfiniteMovingCards = ({
   items,
   direction = "left",
-  speed = "fast",
+  speed = "slow",
   pauseOnHover = true,
-  className
+  className,
 }) => {
   const containerRef = React.useRef(null);
   const scrollerRef = React.useRef(null);
+  const [start, setStart] = useState(false);
 
   useEffect(() => {
     addAnimation();
   }, []);
-  const [start, setStart] = useState(false);
+
   function addAnimation() {
     if (containerRef.current && scrollerRef.current) {
       const scrollerContent = Array.from(scrollerRef.current.children);
 
+      // Duplicate items for seamless infinite loop
       scrollerContent.forEach((item) => {
         const duplicatedItem = item.cloneNode(true);
         if (scrollerRef.current) {
@@ -31,52 +39,71 @@ export const InfiniteMovingCards = ({
       setStart(true);
     }
   }
+
   const getDirection = () => {
     if (containerRef.current) {
-      if (direction === "left") {
-        containerRef.current.style.setProperty("--animation-direction", "forwards");
-      } else {
-        containerRef.current.style.setProperty("--animation-direction", "reverse");
-      }
+      containerRef.current.style.setProperty(
+        "--animation-direction",
+        direction === "left" ? "forwards" : "reverse"
+      );
     }
   };
+
   const getSpeed = () => {
     if (containerRef.current) {
-      if (speed === "fast") {
-        containerRef.current.style.setProperty("--animation-duration", "20s");
-      } else if (speed === "normal") {
-        containerRef.current.style.setProperty("--animation-duration", "40s");
-      } else {
-        containerRef.current.style.setProperty("--animation-duration", "80s");
-      }
+      const duration =
+        speed === "fast" ? "20s" : speed === "normal" ? "40s" : "80s";
+      containerRef.current.style.setProperty("--animation-duration", duration);
     }
   };
+
   return (
     <div
       ref={containerRef}
       className={cn(
-        "scroller relative z-20 max-w-7xl overflow-hidden [mask-image:linear-gradient(to_right,transparent,white_20%,white_80%,transparent)]",
+        "scroller relative z-20 max-w-7xl overflow-hidden",
+        // Fade edges
+        "[mask-image:linear-gradient(to_right,transparent,white_10%,white_90%,transparent)]",
         className
-      )}>
+      )}
+    >
       <ul
         ref={scrollerRef}
         className={cn(
-          "flex w-max min-w-full shrink-0 flex-nowrap gap-4 py-4",
+          "flex w-max min-w-full shrink-0 flex-nowrap gap-6 py-6",
           start && "animate-scroll",
           pauseOnHover && "hover:[animation-play-state:paused]"
-        )}>
-        {items.map((item) => (
+        )}
+      >
+        {items.map((item, idx) => (
           <li
-            className="relative flex w-[180px] max-w-full shrink-0 flex-col items-center justify-center gap-4 rounded-2xl border border-black/10 bg-[rgba(255,255,255,0.72)] px-8 py-6 backdrop-blur-md md:w-[220px] dark:border-white/10 dark:bg-[rgba(3,0,20,0.72)]"
-            key={item.name}>
-            <img
-              src={item.img}
-              alt={item.name}
-              className="relative z-20 h-16 w-16 object-contain"
-            />
-            <span className="relative z-20 text-center text-sm font-medium leading-[1.6] text-gray-900 dark:text-gray-100">
-              {item.name}
-            </span>
+            key={idx}
+            className="relative shrink-0 cursor-pointer group"
+          >
+            {/* Skill card */}
+            <div className="flex flex-col items-center justify-center gap-3
+                            w-[100px] h-[100px] rounded-2xl
+                            border border-purple-500/20
+                            bg-gray-900/60 backdrop-blur-sm
+                            hover:border-purple-500/60
+                            hover:bg-gray-800/80
+                            hover:-translate-y-1
+                            transition-all duration-300">
+
+              {/* Skill icon */}
+              {item.img && (
+                <img
+                  src={item.img}
+                  alt={item.name}
+                  className="w-10 h-10 object-contain group-hover:scale-110 transition-transform duration-300"
+                />
+              )}
+
+              {/* Skill name */}
+              <span className="text-xs text-gray-400 group-hover:text-purple-300 font-mono transition-colors duration-300 text-center px-1">
+                {item.name}
+              </span>
+            </div>
           </li>
         ))}
       </ul>

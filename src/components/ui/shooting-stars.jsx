@@ -31,20 +31,38 @@ export const ShootingStars = ({
 }) => {
   const [star, setStar] = useState(null);
   const svgRef = useRef(null);
+  const isVisibleRef = useRef(true);
+
+  // Pause star creation/movement while this section is off-screen so it
+  // doesn't keep re-rendering the component in the background.
+  useEffect(() => {
+    const node = svgRef.current;
+    if (!node) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        isVisibleRef.current = entry.isIntersecting;
+      },
+      { rootMargin: "200px" }
+    );
+    observer.observe(node);
+    return () => observer.disconnect();
+  }, []);
 
   useEffect(() => {
     const createStar = () => {
-      const { x, y, angle } = getRandomStartPoint();
-      const newStar = {
-        id: Date.now(),
-        x,
-        y,
-        angle,
-        scale: 1,
-        speed: Math.random() * (maxSpeed - minSpeed) + minSpeed,
-        distance: 0,
-      };
-      setStar(newStar);
+      if (isVisibleRef.current) {
+        const { x, y, angle } = getRandomStartPoint();
+        const newStar = {
+          id: Date.now(),
+          x,
+          y,
+          angle,
+          scale: 1,
+          speed: Math.random() * (maxSpeed - minSpeed) + minSpeed,
+          distance: 0,
+        };
+        setStar(newStar);
+      }
 
       const randomDelay = Math.random() * (maxDelay - minDelay) + minDelay;
       setTimeout(createStar, randomDelay);
@@ -57,7 +75,7 @@ export const ShootingStars = ({
 
   useEffect(() => {
     const moveStar = () => {
-      if (star) {
+      if (star && isVisibleRef.current) {
         setStar((prevStar) => {
           if (!prevStar) return null;
           const newX =

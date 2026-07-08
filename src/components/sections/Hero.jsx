@@ -1,7 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import { Spotlight } from "../ui/Spotlight";
-import { Cover } from "../ui/Cover";
+import { Cover } from "../ui/cover";
 import { TypewriterEffect } from "../ui/typewriter-effect";
 import { FloatingDock } from "../ui/floating-dock";
 import { personalData } from "../../data/personal-data";
@@ -246,8 +246,12 @@ const Hero = () => {
               {/* Profile image */}
               <div className="absolute inset-[6px] overflow-hidden rounded-full border border-cyan-500/20">
                 <img
-                  src="/profile.png"
+                  src="/profile.webp"
                   alt={personalData.name}
+                  fetchpriority="high"
+                  decoding="async"
+                  width={320}
+                  height={320}
                   className="w-full h-full object-cover object-top"
                 />
               </div>

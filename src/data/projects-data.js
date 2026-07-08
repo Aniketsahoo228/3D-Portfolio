@@ -7,7 +7,7 @@ export const projectsData = [
     role: "Full Stack Developer",
     code: "https://github.com/Aniketsahoo228",
     demo: "",
-    img: "/projects/project-1.png",
+    img: "/projects/project-1.webp",
   },
   {
     id: 2,
@@ -17,7 +17,7 @@ export const projectsData = [
     role: "Full Stack Developer",
     code: "https://github.com/Aniketsahoo228",
     demo: "",
-    img: "/projects/project-2.png",
+    img: "/projects/project-2.webp",
   },
   {
     id: 3,
@@ -27,7 +27,7 @@ export const projectsData = [
     role: "Frontend Developer",
     code: "https://github.com/Aniketsahoo228",
     demo: "",
-    img: "/projects/project-3.png",
+    img: "/projects/project-3.webp",
   },
   {
     id: 4,
@@ -37,7 +37,7 @@ export const projectsData = [
     role: "Full Stack Developer",
     code: "https://github.com/Aniketsahoo228",
     demo: "",
-    img: "/projects/project-4.png",
+    img: "/projects/project-4.webp",
   },
   {
     id: 5,
@@ -47,7 +47,7 @@ export const projectsData = [
     role: "Full Stack Developer",
     code: "https://github.com/Aniketsahoo228",
     demo: "",
-    img: "/projects/project-5.png",
+    img: "/projects/project-5.webp",
   },
   {
     id: 6,
@@ -57,6 +57,6 @@ export const projectsData = [
     role: "AI Full Stack Developer",
     code: "https://github.com/Aniketsahoo228",
     demo: "",
-    img: "/projects/project-6.png",
+    img: "/projects/project-6.webp",
   },
 ];

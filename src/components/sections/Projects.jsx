@@ -72,6 +72,10 @@ const Projects = () => (
                     <img
                       src={project.img}
                       alt={project.name}
+                      loading="lazy"
+                      decoding="async"
+                      width={600}
+                      height={400}
                       className="w-full h-full object-cover object-top"
                     />
                   ) : (

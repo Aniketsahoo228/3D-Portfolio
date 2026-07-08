@@ -1,7 +1,7 @@
 
 export const personalData = {
   name: "Aniket Sahoo",
-  profile: "/profile.png",
+  profile: "/profile.webp",
   designation: "Full Stack Developer",
 
   description:
